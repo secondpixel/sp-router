@@ -1,7 +1,7 @@
 {
   "name": "sp-router",
   "version": "1.0.0",
-  "description": "easyest javascript router with ajax",
+  "description": "easiest JavaScript router with ajax.",
   "main": "src/app.js",
   "dependencies": {
   },
@@ -31,6 +31,7 @@
     "Router"
   ],
   "author": "SecondPixel",
+  "website": "http://secondpixel.net",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/secondpixel/sp-router/issues"
