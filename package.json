@@ -16,6 +16,7 @@
     "browser-sync": "^2.24.7",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-compile-handlebars": "^0.6.1",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0",
     "gulp-remove-files": "0.0.3",
@@ -23,6 +24,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-tape": "0.0.9",
     "jquery": "^3.3.1",
+    "path": "^0.12.7",
     "tape": "^4.8.0",
     "tasks": "0.0.3"
   },

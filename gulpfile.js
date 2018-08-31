@@ -6,7 +6,9 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     minify = require('gulp-minify'),
     rename = require('gulp-rename'),
-    removeFiles = require('gulp-remove-files');
+    removeFiles = require('gulp-remove-files'),
+    handlebars = require('gulp-compile-handlebars'),
+    pathDep = require('path');
 
 // basic paths
 var path = {
@@ -40,7 +42,8 @@ var config = {
     routerDist: path.test + path.js + path.router,
     jsDist: path.test + path.js,
     cssDist: path.test + path.css,
-    sassPath: path.src + path.scss
+    sassPath: path.src + path.scss,
+    views: path.src + path.test + path.views
 };
 
 // dependencies paths confiuration
@@ -48,6 +51,34 @@ var dependenciesConfig = {
     bootstrap: path.nodeModules + "bootstrap/dist/",
     jquery: path.nodeModules + "jquery/dist/"
 };
+
+// compile handlebars
+gulp.task('handlebars', function() {
+    var options = {
+        batch: [path.src + path.test]
+    };
+
+    var files = [
+        [path.src + path.test + 'index.hbs', path.test + 'index.html'],
+        [config.views + 'home/home.hbs', path.test + path.views + 'home/home.html'],
+        [config.views + 'products/products.hbs', path.test + path.views + 'products/products.html'],
+        [config.views + 'products/product.hbs', path.test + path.views + 'products/product.html'],
+    ];
+
+    return files.forEach(function(filePair) {
+        var src = filePair[0];
+        var dist = filePair[1];
+        var distDir = pathDep.dirname(dist);
+        var distFileName = pathDep.basename(dist);
+
+        return gulp.src(src)
+            .pipe(handlebars({}, options))
+            .pipe(rename(distFileName))
+            .pipe(gulp.dest(distDir))
+            .pipe(browserSync.stream());
+    });
+    
+});
 
 // compile es6 to es2015
 gulp.task("es6", function(){
@@ -59,19 +90,6 @@ gulp.task("es6", function(){
         .pipe(gulp.dest(config.routerDist)); 
 });
 
-// move all html files
-gulp.task("page", function(){
-    gulp.src([
-        path.src + path.views + "**/*"
-    ])
-        .pipe(gulp.dest(path.test + path.views));
-
-    gulp.src([
-        path.src + files.index
-    ])
-        .pipe(gulp.dest(path.test));
-});
-
 // move dependencies js files and make bundle
 gulp.task("js", function(){
     gulp.src([
@@ -81,14 +99,17 @@ gulp.task("js", function(){
     .pipe(concat(files.bundleJs))
     .pipe(gulp.dest(config.jsDist))
     .pipe(browserSync.stream());
-});
 
-// move all custom js files
-gulp.task("moveJs", function(){
     gulp.src([
         path.src + path.js + files.routerFileConfig,
     ])
     .pipe(gulp.dest(config.jsDist))
+    .pipe(browserSync.stream());
+
+    gulp.src([
+        path.src + path.test + "**/*.js",
+    ])
+    .pipe(gulp.dest(path.test))
     .pipe(browserSync.stream());
 });
 
@@ -118,27 +139,20 @@ gulp.task("build", function(){
 
     gulp.src(config.routerPath)
         .pipe(minify())
-        .pipe(gulp.dest(path.dist));
-
-    gulp.src(path.dist + files.routerFileMinRemove)
         .pipe(rename(files.routerFileMin))
         .pipe(gulp.dest(path.dist));
-
-    gulp.src(path.dist + files.routerFileMinRemove)
-        .pipe(removeFiles());
 });
 
 // watch tasks
 gulp.task("watch", function(){
     gulp.watch(
+        [
+            path.src + path.test + '**/*.hbs'
+        ], ['handlebars']
+    ).on('change', browserSync.reload);
+    gulp.watch(
         config.routerPath,
         ["es6", "build"]
-    );
-    gulp.watch(
-        [
-            path.src + "**/*.html"
-        ]
-        ["page"]
     );
     gulp.watch(
         [
@@ -149,8 +163,9 @@ gulp.task("watch", function(){
     gulp.watch(
         [
             path.src + path.js + "**/*.js",
+            path.src + path.test + "**/*.js",
         ], 
-        ['moveJs']
+        ['js']
     ).on('change', browserSync.reload);
 });
 
@@ -159,11 +174,11 @@ gulp.task(
     'default', 
     [
         "serve", 
+        "handlebars",
         "sass", 
         "es6", 
-        "page", 
         "js", 
-        "moveJs", 
+        "build",
         "watch"
     ]
 );
