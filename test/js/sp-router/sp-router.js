@@ -1,14 +1,18 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * SPRouter
- * Version: 1.0
- * Author: SecondPixel
- * License: MIT
+ * Easiest JavaScript router with ajax.
+ * 
+ * Released under the MIT license
+ * 
+ * Copyright: SecondPixel
  */
 
 var SPRouter = function () {
@@ -25,7 +29,7 @@ var SPRouter = function () {
         this._params = params;
         this._routes = params.routes;
         this._content = document.querySelector(params.content);
-        this._defaultRoute = this.hasProps(params, "defaultRoute") ? params.defaultRoute : "/";
+        this._defaultRoute = Json.hasProps(params, "defaultRoute") ? params.defaultRoute : "/";
 
         if (params.loader) {
             this._loader = {
@@ -44,6 +48,9 @@ var SPRouter = function () {
                 _loading: false
             };
         }
+
+        this._ajax = new Ajax();
+        this._element = new Element(this);
 
         this.initRoute();
         this.initLinks();
@@ -73,20 +80,19 @@ var SPRouter = function () {
             var elem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
             var _router = this,
-                cleanHref = _router.characterCheckRemove(href, _router._routeDelimiter);
+                cleanHref = Helpers.characterCheckRemove(href, _router._routeDelimiter);
             _router._route = _router.extractRoute(cleanHref);
 
             if (_router._route) {
                 _router._segmentsStorage = _router.extractSegments(href);
 
                 _router.loader(true);
-
-                _router.getView(_router._route.template, function (res) {
+                this._ajax.getView(_router._route.template, function (res) {
                     _router._view = res;
 
                     _router._content.innerHTML = _router._view;
 
-                    _router.scriptInit(_router._route.script);
+                    _router._element.scriptInit(_router._route.script);
                     _router.initLinks();
 
                     document.title = _router._route.title;
@@ -100,18 +106,6 @@ var SPRouter = function () {
             }
 
             return false;
-        }
-    }, {
-        key: "getView",
-        value: function getView(url, fn) {
-            var _router = this;
-            _router.ajax({
-                type: "GET",
-                url: url,
-                success: function success(res) {
-                    fn(res);
-                }
-            });
         }
     }, {
         key: "extractRoute",
@@ -131,122 +125,44 @@ var SPRouter = function () {
             }
         }
     }, {
-        key: "ajax",
-        value: function ajax() {
-            var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-            var _router = this,
-                xhttp = new XMLHttpRequest(),
-                send = null;
-
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    params.success(xhttp.responseText);
-                }
-            };
-            xhttp.open(params.type, params.url, params.async ? params.async : true);
-
-            if (params.type == "POST") {
-                send = _router.sObject(params.data);
-            }
-
-            xhttp.send(send);
-        }
-    }, {
-        key: "scriptInit",
-        value: function scriptInit(file) {
-            var _router = this,
-                scripts = document.querySelectorAll("script");
-
-            scripts.forEach(function (elem) {
-                if (elem.getAttribute("src") == _router._ls) {
-                    elem.parentNode.removeChild(elem);
-                }
-            });
-
-            _router._body.appendChild(_router.createScript(file));
-            _router._ls = file;
-        }
-    }, {
-        key: "createScript",
-        value: function createScript(src) {
-            var script = document.createElement("script");
-            script.src = src;
-            return script;
-        }
-    }, {
-        key: "characterCheck",
-        value: function characterCheck(string, char) {
-            if (string.indexOf(char) > -1) {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: "numCharactes",
-        value: function numCharactes(string, char) {
-            return (string.match(RegExp(char, 'g')) || []).length;;
-        }
-    }, {
-        key: "characterCheckRemove",
-        value: function characterCheckRemove(string, char) {
-            var _router = this;
-            if (_router.characterCheck(string, char)) {
-                string = string.replace(char, "");
-            }
-            return string;
-        }
-    }, {
-        key: "hasProps",
-        value: function hasProps(obj, prop) {
-            if (obj[prop] && obj[prop] != "") {
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: "sObject",
-        value: function sObject(obj) {
-            var concatString = "";
-            for (var key in obj) {
-                if (concatString != "") {
-                    concatString += "&";
-                }
-                concatString += key + "=" + encodeURIComponent(obj[key]);
-            }
-            return concatString;
-        }
-    }, {
         key: "findRoute",
         value: function findRoute(currentUrlRoute) {
-            var _router = this,
-                currentRouteFragments = _router.decodeRoutes(currentUrlRoute);
+            var _this = this;
 
-            for (var i = 0; i < _router._routes.length; i++) {
-                var route = _router._routes[i],
+            var currentRouteFragments = this.decodeRoutes(currentUrlRoute);
+
+            var _loop = function _loop() {
+                var route = _this._routes[i],
                     routeName = route.route,
-                    routeNumSegments = _router.numCharactes(routeName, ":"),
-                    routeFragments = _router.decodeRoutes(routeName),
+                    routeNumSegments = Helpers.numCharactes(routeName, _this._segmentSplitter),
+                    routeFragments = _this.decodeRoutes(routeName),
                     routeNumFragments = routeFragments.length - routeNumSegments,
-                    defineFragments = _router.routeDefiner(routeFragments);
+                    defineFragments = _this.routeDefiner(routeFragments);
 
                 if (routeFragments.length == currentRouteFragments.length) {
                     var fragmentsPassed = 0;
 
-                    for (var rf = 0; rf < routeFragments.length; rf++) {
-                        var routeFragment = routeFragments[rf],
-                            routeDefinition = defineFragments[rf],
-                            currentRouteFragment = currentRouteFragments[rf];
+                    routeFragments.map(function (fragment, index) {
+                        var routeDefinition = defineFragments[index],
+                            currentRouteFragment = currentRouteFragments[index];
 
-                        if (!routeDefinition && routeFragment == currentRouteFragment) {
+                        if (!routeDefinition && fragment == currentRouteFragment) {
                             fragmentsPassed++;
                         }
-                    }
+                    });
 
                     if (routeNumFragments == fragmentsPassed) {
-                        return route;
+                        return {
+                            v: route
+                        };
                     }
                 }
+            };
+
+            for (var i = 0; i < this._routes.length; i++) {
+                var _ret = _loop();
+
+                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
             }
 
             return false;
@@ -259,14 +175,12 @@ var SPRouter = function () {
     }, {
         key: "isSegment",
         value: function isSegment(string) {
-            var _router = this;
-            return _router.characterCheck(string, _router._segmentSplitter);
+            return Helpers.characterCheck(string, this._segmentSplitter);
         }
     }, {
         key: "numSegments",
         value: function numSegments(route) {
-            var _router = this;
-            return _router.numCharactes(route, _router._segmentSplitter);
+            return Helpers.numCharactes(route, this._segmentSplitter);
         }
     }, {
         key: "routeDefiner",
@@ -274,15 +188,13 @@ var SPRouter = function () {
             var _router = this,
                 definitions = {};
 
-            for (var x = 0; x < routeFragments.length; x++) {
-                var fragment = routeFragments[x];
-
+            routeFragments.map(function (fragment, index) {
                 if (_router.isSegment(fragment)) {
-                    definitions[x] = true;
+                    definitions[index] = true;
                 } else {
-                    definitions[x] = false;
+                    definitions[index] = false;
                 }
-            }
+            });
 
             return definitions;
         }
@@ -297,16 +209,15 @@ var SPRouter = function () {
                 internalSegmentsStorage = {};
 
             if (_router.numSegments(_routeName) > 0) {
-                for (var s = 0; s < routeFragments.length; s++) {
-                    var fragment = routeFragments[s],
-                        currentRouteFragment = currentRouteFragments[s];
+                routeFragments.map(function (fragment, index) {
+                    var currentRouteFragment = currentRouteFragments[index];
 
                     if (_router.isSegment(fragment)) {
                         var segmentToFragment = fragment.replace(_router._segmentSplitter, "");
 
                         internalSegmentsStorage['"' + segmentToFragment + '"'] = currentRouteFragment;
                     }
-                }
+                });
             }
 
             return internalSegmentsStorage;
@@ -314,8 +225,7 @@ var SPRouter = function () {
     }, {
         key: "segment",
         value: function segment(name) {
-            var _router = this;
-            return _router._segmentsStorage['"' + name + '"'];
+            return this._segmentsStorage['"' + name + '"'];
         }
     }, {
         key: "initLinks",
@@ -383,4 +293,141 @@ var SPRouter = function () {
     }]);
 
     return SPRouter;
+}();
+
+var Ajax = function () {
+    function Ajax() {
+        _classCallCheck(this, Ajax);
+    }
+
+    _createClass(Ajax, [{
+        key: "ajax",
+        value: function ajax() {
+            var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            var xhttp = new XMLHttpRequest(),
+                send = null;
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    params.success(xhttp.responseText);
+                }
+            };
+            xhttp.open(params.type, params.url, params.async ? params.async : true);
+
+            if (params.type == "POST") {
+                send = Json.sObject(params.data);
+            }
+
+            xhttp.send(send);
+        }
+    }, {
+        key: "getView",
+        value: function getView(url, fn) {
+            this.ajax({
+                type: "GET",
+                url: url,
+                success: function success(res) {
+                    fn(res);
+                }
+            });
+        }
+    }]);
+
+    return Ajax;
+}();
+
+var Json = function () {
+    function Json() {
+        _classCallCheck(this, Json);
+    }
+
+    _createClass(Json, null, [{
+        key: "sObject",
+        value: function sObject(obj) {
+            var concatString = "";
+            for (var key in obj) {
+                if (concatString != "") {
+                    concatString += "&";
+                }
+                concatString += key + "=" + encodeURIComponent(obj[key]);
+            }
+            return concatString;
+        }
+    }, {
+        key: "hasProps",
+        value: function hasProps(obj, prop) {
+            if (obj[prop] && obj[prop] != "") {
+                return true;
+            }
+            return false;
+        }
+    }]);
+
+    return Json;
+}();
+
+var Element = function () {
+    function Element(router) {
+        _classCallCheck(this, Element);
+
+        this._router = router;
+    }
+
+    _createClass(Element, [{
+        key: "scriptInit",
+        value: function scriptInit(file) {
+            var _router = this._router,
+                scripts = document.querySelectorAll("script");
+
+            scripts.forEach(function (elem) {
+                if (elem.getAttribute("src") == _router._ls) {
+                    elem.parentNode.removeChild(elem);
+                }
+            });
+
+            _router._body.appendChild(this.createScript(file));
+            _router._ls = file;
+        }
+    }, {
+        key: "createScript",
+        value: function createScript(src) {
+            var script = document.createElement("script");
+            script.src = src;
+            return script;
+        }
+    }]);
+
+    return Element;
+}();
+
+var Helpers = function () {
+    function Helpers() {
+        _classCallCheck(this, Helpers);
+    }
+
+    _createClass(Helpers, null, [{
+        key: "characterCheck",
+        value: function characterCheck(string, char) {
+            if (string.indexOf(char) > -1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "numCharactes",
+        value: function numCharactes(string, char) {
+            return (string.match(RegExp(char, 'g')) || []).length;;
+        }
+    }, {
+        key: "characterCheckRemove",
+        value: function characterCheckRemove(string, char) {
+            if (this.characterCheck(string, char)) {
+                string = string.replace(char, "");
+            }
+            return string;
+        }
+    }]);
+
+    return Helpers;
 }();

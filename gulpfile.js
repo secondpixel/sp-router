@@ -54,9 +54,7 @@ gulp.task("es6", function(){
     return gulp.src([
             config.routerPath
         ])
-        .pipe(babel({
-            presets: ['es2015']
-        }))
+        .pipe(babel())
         .pipe(tape())
         .pipe(gulp.dest(config.routerDist)); 
 });
@@ -166,7 +164,6 @@ gulp.task(
         "page", 
         "js", 
         "moveJs", 
-        "build", 
         "watch"
     ]
 );
