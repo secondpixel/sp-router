@@ -386,8 +386,10 @@ var Element = function () {
                 }
             });
 
-            _router._body.appendChild(this.createScript(file));
-            _router._ls = file;
+            if (typeof file != "undefined") {
+                _router._body.appendChild(this.createScript(file));
+                _router._ls = file;
+            }
         }
     }, {
         key: "createScript",

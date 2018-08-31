@@ -1,0 +1,43 @@
+<h1 class="mb-3">Intallation</h1>
+<hr/>
+<h4 class="mb-2 mt-3">Via npm:</h4>
+<pre class="bg-dark p-4 text-white mb-5">
+npm i sp-router-js
+</pre>
+
+<hr/>
+
+<h1 class="mt-5 mb-3">Implementation</h1>
+<hr/>
+<h4 class="mb-2 mt-3">From node_modules</h4>
+<pre class="bg-dark p-4 text-white">
+&lt;script src="sp-router.js">&lt;/script>
+&lt;script src="sp-router.min.js">&lt;/script>
+</pre>
+
+<hr/>
+
+<h1 class="mt-5 mb-3 mb-5">Configuration</h1>
+<hr/>
+<p class="mb-2 mt-3">Create routerConfig.js file in your project.</p>
+<p class="mb-2 mt-3">Then add following code:</p>
+<pre class="bg-dark p-4 text-white">
+var router = new SPRouter({
+    content: "#app",
+    routes: [
+        ...
+    ],
+    defaultRoute: ...
+});
+</pre>
+<p class="mb-2 mt-3">After configuration file is created add to your project after router-js script.</p>
+<pre class="bg-dark p-4 text-white mb-5">
+&lt;script src="sp-router.js">&lt;/script>
+&lt;script src="routerConfig.js">&lt;/script>
+</pre>
+
+<div class="row">
+    <div class="col text-right">
+        <a href="#/usage" class="btn btn-outline-primary mb-5">Usage</a>
+    </div>
+</div>

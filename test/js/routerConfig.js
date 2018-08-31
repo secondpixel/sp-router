@@ -8,10 +8,14 @@ var router = new SPRouter({
             script: "views/home/home.js"
         },
         {
-            title: "About",
-            route: "/about",
-            template: "views/about/about.html",
-            script: "views/about/about.js"
+            title: "Installation",
+            route: "/installation",
+            template: "views/installation/installation.html"
+        },
+        {
+            title: "Usage",
+            route: "/usage",
+            template: "views/usage/usage.html"
         },
         {
             title: "Products",
@@ -33,6 +37,6 @@ var router = new SPRouter({
     },
     lazy: {
         loading: true,
-        duration: 500
+        duration: 100
     }
 });

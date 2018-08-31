@@ -318,15 +318,17 @@ class Element {
     scriptInit(file){
         let _router = this._router,
             scripts = document.querySelectorAll("script");
-
-        scripts.forEach(function(elem){
+            
+        scripts.forEach((elem) => {
             if(elem.getAttribute("src") == _router._ls){
                 elem.parentNode.removeChild(elem);
             }
         });
-
-        _router._body.appendChild(this.createScript(file));
-        _router._ls = file;
+        
+        if(typeof file != "undefined"){
+            _router._body.appendChild(this.createScript(file));
+            _router._ls = file;
+        }
     }
 
     createScript(src){

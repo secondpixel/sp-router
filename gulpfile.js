@@ -43,7 +43,8 @@ var config = {
     jsDist: path.test + path.js,
     cssDist: path.test + path.css,
     sassPath: path.src + path.scss,
-    views: path.src + path.test + path.views
+    views: path.src + path.test + path.views,
+    routerDistFile: path.test + path.js + path.router + "/" + files.routerFile,
 };
 
 // dependencies paths confiuration
@@ -63,6 +64,8 @@ gulp.task('handlebars', function() {
         [config.views + 'home/home.hbs', path.test + path.views + 'home/home.html'],
         [config.views + 'products/products.hbs', path.test + path.views + 'products/products.html'],
         [config.views + 'products/product.hbs', path.test + path.views + 'products/product.html'],
+        [config.views + 'installation/installation.hbs', path.test + path.views + 'installation/installation.html'],
+        [config.views + 'usage/usage.hbs', path.test + path.views + 'usage/usage.html'],
     ];
 
     return files.forEach(function(filePair) {
@@ -134,10 +137,10 @@ gulp.task('serve', ['sass'], function() {
 
 // make minified file and move directly to dist
 gulp.task("build", function(){
-    gulp.src(config.routerPath)
+    gulp.src(config.routerDistFile)
         .pipe(gulp.dest(path.dist));
 
-    gulp.src(config.routerPath)
+    gulp.src(config.routerDistFile)
         .pipe(minify())
         .pipe(rename(files.routerFileMin))
         .pipe(gulp.dest(path.dist));
