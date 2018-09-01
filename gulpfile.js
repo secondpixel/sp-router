@@ -20,7 +20,8 @@ var path = {
     css: "css/",
     js: "js/",
     scss: "scss/",
-    views: "views/"
+    views: "views/",
+    images: "images/"
 };
 
 // files 
@@ -135,6 +136,15 @@ gulp.task('serve', ['sass'], function() {
     gulp.watch(path.src + "**/*.html").on('change', browserSync.reload);
 });
 
+// pipe media images
+gulp.task('images', function() {
+    return gulp.src([
+        path.src + path.test + path.images + '**/*',
+    ])
+        .pipe(gulp.dest(path.test + path.images))
+        .pipe(browserSync.stream());
+});
+
 // make minified file and move directly to dist
 gulp.task("build", function(){
     gulp.src(config.routerDistFile)
@@ -180,7 +190,8 @@ gulp.task(
         "handlebars",
         "sass", 
         "es6", 
-        "js", 
+        "js",
+        "images",
         "build",
         "watch"
     ]

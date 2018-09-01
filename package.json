@@ -1,6 +1,6 @@
 {
   "name": "sp-router-js",
-  "version": "1.2",
+  "version": "1.2.0",
   "description": "easiest JavaScript router with ajax.",
   "main": "src/app.js",
   "dependencies": {},
