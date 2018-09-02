@@ -1,0 +1,103 @@
+<h1 class="mt-5 mb-3 mb-5">Additional</h1>
+<hr/>
+<h4 class="mb-2 mt-3">Loader</h4>
+<p class="mb-2 mt-3">If you want to add loader in your application then you can add your loader html to your index.html and configure router to show and hide when page is fully loaded.</p>
+<pre class="bg-dark p-4 text-white">
+&lt;!doctype html>
+&lt;html lang="en">
+
+&lt;head>
+    &lt;title>Your Page&lt;/title>
+    &lt;meta content="http://localhost:3000/" name="base_url" />
+&lt;/head>
+
+&lt;body>
+    &lt;nav class="....">
+        ...
+    &lt;/nav>
+
+    &lt;div class="container">
+        <b class="text-warning">
+        &lt;div class="progress d-none">
+            &lt;div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                 aria-valuemax="100" style="width: 100%">&lt;/div>
+        &lt;/div>
+        </b>
+        &lt;div id="app">&lt;/div>
+    &lt;/div>
+
+    &lt;footer>
+        ...
+    &lt;/footer>
+
+    &lt;script src="js/sp-router/sp-router.js">&lt;/script>
+    &lt;script src="js/routerConfig.js">&lt;/script>
+&lt;/body>
+
+&lt;/html>
+</pre>
+<p>Then configure in routerConfig.js</p>
+<pre class="bg-dark p-4 text-white">
+var router = new SPRouter({
+    content: "#app",
+    defaultRoute: "/"
+    routes: [
+        {
+            title: "Products",
+            route: "/products",
+            template: "views/products/products.html",
+            script: "views/products/products.js"
+        },
+        {
+            title: "Product",
+            route: "/products/:productId/view",
+            template: "views/products/product.html",
+            script: "views/products/product.js"
+        }
+    ],
+    loader: {
+        selector: ".progress", <b class="text-warning">// your loader class or id selector</b>
+    },
+});
+</pre>
+<p class="mb-2 mt-3">This configuration will give show/hide behavior with <b>display:none/block;</b> inline style.</p>
+<p>If you to show/hide with custom class then add <b>showHideClass</b> key to loader configuration</p>
+<pre class="bg-dark p-4 text-white mb-5">
+    loader: {
+        selector: ".progress",
+        showHideClass: "d-none" <b class="text-warning">// your class to show and hide</b>
+    },
+</pre>
+<p>By default your loader must be <b>hidden (to have your class for hidding)</b> and when router will start loading then will remove your class and when will finish with loading will add your class to hide page loader.</p>
+<p>By default when loader is showed up div#app content is hiding. To prevent this behavior do not came up provide <b>loadContentHide</b> into loader configuration.</p>
+<pre class="bg-dark p-4 text-white mb-5">
+    loader: {
+        selector: ".progress",
+        showHideClass: "d-none",
+        <b class="text-warning">loadContentHide: false</b>
+    },
+</pre>
+<hr/>
+<h4 class="mb-2 mt-3">Lazy loading</h4>
+<p class="mb-2 mt-3">If you want to add some delay when router is loading add lazy array objects in <b>routerConfig.js</b> configuration</p>
+<pre class="bg-dark p-4 text-white mb-5">
+    <b class="text-warning">lazy: {
+        loading: true
+    },
+    </b>
+</pre>
+<p>By default lazy loading set to true has additional 500 milliseconds.</p>
+<p>If you want to set custom delay interval set duration object into lazy array.</p>
+<pre class="bg-dark p-4 text-white mb-5">
+    lazy: {
+        loading: true,
+        <b class="text-warning">duration: 1000 // in milliseconds</b>
+    },
+</pre>
+
+<div class="row">
+    <div class="col d-flex justify-content-between">
+        <a href="#/usage" class="btn btn-outline-primary mb-5">Usage</a>
+        <a href="#/hashtag" class="btn btn-outline-primary mb-5">Hashtag Escape</a>
+    </div>
+</div>

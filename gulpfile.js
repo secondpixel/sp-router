@@ -4,9 +4,8 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     sass = require('gulp-sass'),
     concat = require('gulp-concat'),
-    minify = require('gulp-minify'),
+    uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
-    removeFiles = require('gulp-remove-files'),
     handlebars = require('gulp-compile-handlebars'),
     pathDep = require('path');
 
@@ -67,6 +66,8 @@ gulp.task('handlebars', function() {
         [config.views + 'products/product.hbs', path.test + path.views + 'products/product.html'],
         [config.views + 'installation/installation.hbs', path.test + path.views + 'installation/installation.html'],
         [config.views + 'usage/usage.hbs', path.test + path.views + 'usage/usage.html'],
+        [config.views + 'hashtag/hashtag.hbs', path.test + path.views + 'hashtag/hashtag.html'],
+        [config.views + 'additional/additional.hbs', path.test + path.views + 'additional/additional.html'],
     ];
 
     return files.forEach(function(filePair) {
@@ -145,17 +146,6 @@ gulp.task('images', function() {
         .pipe(browserSync.stream());
 });
 
-// make minified file and move directly to dist
-gulp.task("build", function(){
-    gulp.src(config.routerDistFile)
-        .pipe(gulp.dest(path.dist));
-
-    gulp.src(config.routerDistFile)
-        .pipe(minify())
-        .pipe(rename(files.routerFileMin))
-        .pipe(gulp.dest(path.dist));
-});
-
 // watch tasks
 gulp.task("watch", function(){
     gulp.watch(
@@ -192,7 +182,20 @@ gulp.task(
         "es6", 
         "js",
         "images",
-        "build",
         "watch"
     ]
 );
+
+gulp.task("build", function(){
+    gulp.src([
+        config.routerPath
+    ])
+        .pipe(babel())
+        .pipe(tape())
+        .pipe(gulp.dest(path.dist));
+
+    gulp.src([path.dist + files.routerFile])
+        .pipe(uglify())
+        .pipe(rename(files.routerFileMin))
+        .pipe(gulp.dest(path.dist));
+});

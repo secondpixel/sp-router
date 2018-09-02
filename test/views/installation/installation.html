@@ -9,10 +9,22 @@ npm i sp-router-js
 
 <h1 class="mt-5 mb-3">Implementation</h1>
 <hr/>
-<h4 class="mb-2 mt-3">From node_modules</h4>
+<h4 class="mb-2 mt-3">Base Path</h4>
+<p>To make this router work you must set base path. To set base url path to your website application, add following meta tag:</p>
 <pre class="bg-dark p-4 text-white">
-&lt;script src="sp-router.js">&lt;/script>
-&lt;script src="sp-router.min.js">&lt;/script>
+&lt;meta content="http://example.com/" name="base_url" />
+</pre>
+<hr/>
+<h3 class="mb-2 mt-3">Include to project</h3>
+<h4 class="mb-2 mt-3">From node_modules:</h4>
+<pre class="bg-dark p-4 text-white">
+&lt;script src="node_modules/sp-router-js/dist/sp-router.js">&lt;/script>
+&lt;script src="node_modules/sp-router-js/dist/sp-router.min.js">&lt;/script>
+</pre>
+<h4 class="mb-2 mt-3">Custom path:</h4>
+<pre class="bg-dark p-4 text-white">
+&lt;script src="path/to/router/sp-router.js">&lt;/script>
+&lt;script src="path/to/router/sp-router.min.js">&lt;/script>
 </pre>
 
 <hr/>
@@ -23,11 +35,7 @@ npm i sp-router-js
 <p class="mb-2 mt-3">Then add following code:</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
-    content: "#app",
-    routes: [
-        ...
-    ],
-    defaultRoute: ...
+    ...
 });
 </pre>
 <p class="mb-2 mt-3">After configuration file is created add to your project after router-js script.</p>

@@ -1,0 +1,55 @@
+<h1 class="mb-3">Hashtag</h1>
+
+<hr/>
+
+<p>by default hastags are allowed in this router.</p>
+<p class="mt-5 mb-3">To escape hashtag in routes then add following .htaccess file.</p>
+<hr/>
+<p class="mb-2 mt-3">First create .htaccess file and add following code</p>
+<pre class="bg-dark p-4 text-white">
+RewriteEngine On
+# The following rule tells Apache that if the requested filename
+# exists, simply serve it.
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+# The following rewrites all other queries to index.html. The
+# condition ensures that if you are using Apache aliases to do
+# mass virtual hosting, the base path will be prepended to
+# allow proper resolution of the index.php file; it will work
+# in non-aliased environments as well, providing a safe, one-size
+# fits all solution.
+RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
+RewriteRule ^(.*) - [E=BASE:%1]
+RewriteRule ^(.*)$ %{ENV:BASE}index.html [NC,L]
+</pre>
+<p>Then add following configuration in <b>routerConfig.js</b></p>
+<pre class="bg-dark p-4 text-white">
+var router = new SPRouter({
+    content: "#app",
+    defaultRoute: "/"
+    routes: [
+        {
+            title: "Products",
+            route: "/products",
+            template: "views/products/products.html",
+            script: "views/products/products.js"
+        },
+        {
+            title: "Product",
+            route: "/products/:productId/view",
+            template: "views/products/product.html",
+            script: "views/products/product.js"
+        }
+    ],
+    loader: {
+        selector: ".progress",
+    },
+    lazy: {
+        loading: true,
+        duration: 100
+    },
+    <b class="text-warning">hashtag: false</b>
+});
+</pre>

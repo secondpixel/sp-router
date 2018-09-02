@@ -25,17 +25,21 @@ var SPRouter = function () {
         this._currentUrl = window.location.href, this._baseUrl = document.querySelector("meta[name='base_url']").content;
         this._routeDelimiter = "#";
         this._segmentSplitter = ":";
+        this._slashDelimiter = "/";
 
-        this._params = params;
         this._routes = params.routes;
         this._content = document.querySelector(params.content);
         this._defaultRoute = Json.hasProps(params, "defaultRoute") ? params.defaultRoute : "/";
+        this._hashtag = typeof params.hashtag === "undefined" ? true : params.hashtag;
+
+        this._contentLoadHide = true;
 
         if (params.loader) {
             this._loader = {
                 _loaderSelector: document.querySelector(params.loader.selector),
-                _loaderShow: params.loader.showClass ? params.loader.showClass : null
+                _loaderShow: params.loader.showHideClass ? params.loader.showHideClass : null
             };
+            this._contentLoadHide = typeof params.loader.loadContentHide === "undefined" ? true : params.loader.loadContentHide;
         }
 
         if (params.lazy) {
@@ -80,7 +84,9 @@ var SPRouter = function () {
             var elem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
             var _router = this,
-                cleanHref = Helpers.characterCheckRemove(href, _router._routeDelimiter);
+                cleanHref = _router._slashDelimiter + Helpers.characterCheckRemove(Helpers.slashRemove(href), _router._routeDelimiter),
+                routeToShow = _router._hashtag ? _router._routeDelimiter + cleanHref : cleanHref;
+
             _router._route = _router.extractRoute(cleanHref);
 
             if (_router._route) {
@@ -99,7 +105,7 @@ var SPRouter = function () {
                     window.history.pushState({
                         "html": _router._view,
                         "pageTitle": _router._route.title
-                    }, "", _router._baseUrl + (cleanHref == "/" ? "" : _router._routeDelimiter + cleanHref));
+                    }, "", _router._baseUrl + (cleanHref == "/" ? "" : routeToShow));
 
                     _router.loader(false);
                 });
@@ -274,19 +280,27 @@ var SPRouter = function () {
                     if (isClassEnabled) {
                         this._loader._loaderSelector.classList.remove(this._loader._loaderShow);
                     } else {
-                        this._loader._loaderSelector.style.display = "block";
+                        if (this._contentLoadHide) {
+                            this._loader._loaderSelector.style.display = "block";
+                        }
                     }
 
-                    this._content.style.display = "none";
+                    if (this._contentLoadHide) {
+                        this._content.style.display = "none";
+                    }
                     break;
                 case false:
                     if (isClassEnabled) {
                         this._loader._loaderSelector.classList.add(this._loader._loaderShow);
                     } else {
-                        this._loader._loaderSelector.style.display = "none";
+                        if (this._contentLoadHide) {
+                            this._loader._loaderSelector.style.display = "none";
+                        }
                     }
 
-                    this._content.removeAttribute("style");
+                    if (this._contentLoadHide) {
+                        this._content.removeAttribute("style");
+                    }
                     break;
             }
         }
@@ -426,6 +440,14 @@ var Helpers = function () {
         value: function characterCheckRemove(string, char) {
             if (this.characterCheck(string, char)) {
                 string = string.replace(char, "");
+            }
+            return string;
+        }
+    }, {
+        key: "slashRemove",
+        value: function slashRemove(string) {
+            if (this.characterCheck(string, "/")) {
+                string = string.replace(/\//g, "");
             }
             return string;
         }

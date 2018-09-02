@@ -1,12 +1,5 @@
 # SPRouter.js
 Easiest JavaScript router with ajax.
-
-<h2>
-    <a href="">
-        Demo
-    </a>
-</h2>
-
 <h2>Intallation</h2>
 
 <h3>
@@ -17,9 +10,9 @@ npm i sp-router-js
 </pre>
 
 <h3>
-    Usage
+    Demo & Documentation Page
 </h3>
 
 <h1>
-    Under Construction
+    Comming soon...
 </h1>

@@ -28,12 +28,22 @@ var router = new SPRouter({
             route: "/products/:productId/view",
             template: "views/products/product.html",
             script: "views/products/product.js"
+        },
+        {
+            title: "Additional",
+            route: "/additional",
+            template: "views/additional/additional.html"
+        },
+        {
+            title: "Hashtag Escape",
+            route: "/hashtag",
+            template: "views/hashtag/hashtag.html"
         }
     ],
     defaultRoute: "/",
     loader: {
         selector: ".progress",
-        showClass: "d-none",
+        showHideClass: "d-none"
     },
     lazy: {
         loading: true,
