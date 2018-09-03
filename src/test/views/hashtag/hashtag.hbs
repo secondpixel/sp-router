@@ -1,11 +1,14 @@
-<h1 class="mb-3">Hashtag</h1>
+<div class="hashtag-page">
+    <div class="hashtag-page-header">
+        <h1 class="mb-3 page-title">Hashtag</h1>
 
-<hr/>
-
-<p>by default hastags are allowed in this router.</p>
-<p class="mt-5 mb-3">To escape hashtag in routes then add following .htaccess file.</p>
-<hr/>
-<p class="mb-2 mt-3">First create .htaccess file and add following code</p>
+        <hr/>
+    </div>
+    <div class="hastag-page-content">
+        <p class="article-content">By default hastags are allowed in this router.</p>
+        <p class="mt-3 mb-3 article-content">To escape hashtag in routes then add following .htaccess file.</p>
+        <hr/>
+        <p class="mb-2 mt-3 article-content">First create .htaccess file in same level with your index file and add following code</p>
 <pre class="bg-dark p-4 text-white">
 RewriteEngine On
 # The following rule tells Apache that if the requested filename
@@ -24,7 +27,7 @@ RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.html [NC,L]
 </pre>
-<p>Then add following configuration in <b>routerConfig.js</b></p>
+        <p class="article-content">Then add following configuration in <b>routerConfig.js</b></p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     content: "#app",
@@ -53,3 +56,11 @@ var router = new SPRouter({
     <b class="text-warning">hashtag: false</b>
 });
 </pre>
+    </div>
+    <div class="buttons">
+        <a href="#/additional" class="btn btn-outline-primary mb-5"><span class="arrow arrow-left"></span>Additional</a>
+    </div>
+</div>
+
+
+

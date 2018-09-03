@@ -1,10 +1,12 @@
-<h1 class="mb-3">Usage</h1>
+<div class="usage-page">
+    <div class="usage-page-header">
+        <h1 class="mb-3 page-title">Usage</h1>
 
-<hr/>
-
-<h1 class="mt-5 mb-3">Content selector setup.</h1>
-<hr/>
-<p class="mb-2 mt-3">First add div to your index page and add selector by id or class:</p>
+        <hr/>
+    </div>
+    <div class="usage-page-selector">
+        <h1 class="mt-5 mb-2 section-title">Content selector setup</h1>
+        <p class="mb-2 mt-0 article-content">First add div to your index page and add selector by id or class:</p>
 <pre class="bg-dark p-4 text-white">
 &lt;!doctype html>
 &lt;html lang="en">
@@ -33,18 +35,18 @@
 
 &lt;/html>
 </pre>
-<p>Then add content to router configuration.</p>
+        <p class="article-content">Then add content to router configuration.</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     content: "#app"
 });
 </pre>
 
-<hr/>
-
-<h1 class="mt-5 mb-3">Setup default route</h1>
-<hr/>
-<p class="mb-2 mt-3">To setup default route for your application add <b class="text-danger">defaultRoute</b> parameter to the configuration.</p>
+        <hr/>
+    </div>
+    <div class="usage-page-setup">
+        <h1 class="mt-5 mb-3 section-title">Setup default route</h1>
+        <p class="mb-2 mt-3 article-content">To setup default route for your application add <b class="text-danger">defaultRoute</b> parameter to the configuration.</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     content: "#app",
@@ -52,27 +54,27 @@ var router = new SPRouter({
 });
 </pre>
 
-<hr/>
-
-<h1 class="mt-5 mb-3">Create routes</h1>
-<hr/>
-<h4 class="mb-2 mt-3">Create basic routes</h4>
-<p>To create a basic route you must add routes array with objects into router configuration.</p>
-<p>All routes must have by default: <b class="text-danger">title</b>, <b class="text-danger">route</b> and <b class="text-danger">template</b>.</p>
+        <hr/>
+    </div>
+    <div class="usage-page-create">
+        <h1 class="mt-5 mb-3 section-title">Create routes</h1>
+        <h4 class="mb-2 mt-3 content-title">Create basic routes</h4>
+        <p class="article-content">To create a basic route you must add routes array with objects into router configuration.</p>
+        <p class="article-content">All routes must have by default: <b class="text-danger">title</b>, <b class="text-danger">route</b> and <b class="text-danger">template</b>.</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     content: "#app",
     defaultRoute: "/"
     routes: [
         {
-             <b class="text-warning">title</b>: "Home",
-             <b class="text-warning">route</b>: "/",
-             <b class="text-warning">template</b>: "views/home/home.html"
+            <b class="text-warning">title</b>: "Home",
+            <b class="text-warning">route</b>: "/",
+            <b class="text-warning">template</b>: "views/home/home.html"
         }
     ],
 });
 </pre>
-<p>Additional if you want to add custom js file for every page then provide script key for every route.</p>
+        <p class="article-content">Additional if you want to add custom js file for every page then provide script key for every route.</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     content: "#app",
@@ -88,8 +90,8 @@ var router = new SPRouter({
 });
 </pre>
 
-<h4 class="mb-2 mt-3">Create routes with segments</h4>
-<p>If we want to add page with products and preview page for every product we must provide some id, title etc.. and after to get this dynamic parameters in every page. Next following code will show you how to configure dynamic routes with parameters.</p>
+        <h4 class="mb-2 mt-3 content-title">Create routes with segments</h4>
+        <p class="article-content">If we want to add page with products and preview page for every product we must provide some id, title etc.. and after to get this dynamic parameters in every page. Next following code will show you how to configure dynamic routes with parameters.</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     content: "#app",
@@ -110,17 +112,21 @@ var router = new SPRouter({
     ],
 });
 </pre>
-<p>All dynamic parameters you want to configure in routes must be sperated with color(:).</p>
-<p>Example: <b class="text-danger">:productId</b></p>
-<p>To get this dynamic paramter (id, title etc...) you must take from router object.</p>
+        <p class="article-content">All dynamic parameters you want to configure in routes must be sperated with color(:).</p>
+        <p class="article-content">Example: <b class="text-danger">:productId</b></p>
+        <p class="article-content">To get this dynamic paramter (id, title etc...) you must take from router object.</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({...});
 var id = router.segment("productId");
 </pre>
-
-<div class="row">
-    <div class="col d-flex justify-content-between">
-        <a href="#/installation" class="btn btn-outline-primary mb-5">Installation</a>
-        <a href="#/additional" class="btn btn-outline-primary mb-5">Additional</a>
+    </div>
+    
+    <div class="buttons">
+        <div class="row">
+            <div class="col d-flex justify-content-between">
+                <a href="#/installation" class="btn btn-outline-primary mb-5"><span class="arrow arrow-left"></span>Installation</a>
+                <a href="#/additional" class="btn btn-outline-primary mb-5">Additional<span class="arrow arrow-right"></span></a>
+            </div>
+        </div>
     </div>
 </div>

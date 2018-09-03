@@ -1,52 +1,56 @@
-<h1 class="mb-3">Intallation</h1>
-<hr/>
-<h5 class="mb-2 mt-3">Via npm:</h5>
+
+<div class="installation-page">
+    <div class="installation-page-header">
+        <h1 class="mb-3 page-title">Installation</h1>
+        <hr/>
+        <h4 class="mb-2 mt-3 content-title">Via npm:</h4>
 <pre class="bg-dark p-4 text-white mb-5">
 npm i sp-router-js
 </pre>
-
-<hr/>
-
-<h1 class="mt-5 mb-3">Implementation</h1>
-<hr/>
-<h4 class="mb-2 mt-3">Base Path</h4>
-<p>To make this router work you must set base path. To set base url path to your website application, add following meta tag:</p>
+    </div>
+    <div class="installation-page-implement">
+        <h1 class="mt-5 mb-3 section-title">Implementation</h1>
+        <h4 class="mb-2 mt-3 content-title">Base Path</h4>
+        <p class="article-content">To make this router work you must set base path. To set base url path to your website application, add the following meta tag:</p>
 <pre class="bg-dark p-4 text-white">
 &lt;meta content="http://example.com/" name="base_url" />
 </pre>
-<hr/>
-<h3 class="mb-2 mt-3">Include to project</h3>
-<h4 class="mb-2 mt-3">From node_modules:</h4>
+        <hr/>
+        <h3 class="mb-2 mt-3 article-title">Include to project</h3>
+        <h4 class="mb-2 mt-3 content-title">From node_modules:</h4>
 <pre class="bg-dark p-4 text-white">
 &lt;script src="node_modules/sp-router-js/dist/sp-router.js">&lt;/script>
 &lt;script src="node_modules/sp-router-js/dist/sp-router.min.js">&lt;/script>
 </pre>
-<h4 class="mb-2 mt-3">Custom path:</h4>
+        <h4 class="mb-2 mt-3 content-title">Custom path:</h4>
 <pre class="bg-dark p-4 text-white">
 &lt;script src="path/to/router/sp-router.js">&lt;/script>
 &lt;script src="path/to/router/sp-router.min.js">&lt;/script>
 </pre>
 
-<hr/>
-
-<h1 class="mt-5 mb-3 mb-5">Configuration</h1>
-<hr/>
-<p class="mb-2 mt-3">Create routerConfig.js file in your project.</p>
-<p class="mb-2 mt-3">Then add following code:</p>
+        <hr/>
+    </div>
+    <div class="installation-page-config">
+        <h1 class="mt-4 mb-3 mb-4 section-title">Configuration</h1>
+        <p class="mb-0 mt-3 article-content">Create routerConfig.js file in your project.</p>
+        <p class="mb-2 mt-0 article-content">Then add the following code:</p>
 <pre class="bg-dark p-4 text-white">
 var router = new SPRouter({
     ...
 });
 </pre>
-<p class="mb-2 mt-3">After configuration file is created add to your project after router-js script.</p>
+<p class="mb-2 mt-3 article-content">After the configuration file is created, add the highlighted script to your project after router-js script.</p>
 <pre class="bg-dark p-4 text-white mb-5">
 &lt;script src="sp-router.js">&lt;/script>
-&lt;script src="routerConfig.js">&lt;/script>
+<strong class="text-warning">&lt;script src="routerConfig.js">&lt;/script></strong>
 </pre>
-
-<div class="row">
-    <div class="col d-flex justify-content-between">
-        <a href="/" class="btn btn-outline-primary mb-5">Home</a>
-        <a href="#/usage" class="btn btn-outline-primary mb-5">Usage</a>
+    </div>
+    <div class="buttons">
+        <div class="row">
+            <div class="col d-flex justify-content-between">
+                <a href="/" class="btn btn-outline-primary mb-5"><span class="arrow arrow-left"></span>Home</a>
+                <a href="#/usage" class="btn btn-outline-primary mb-5">Usage<span class="arrow arrow-right"></span></a>
+            </div>
+        </div>
     </div>
 </div>

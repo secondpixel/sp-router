@@ -1,0 +1,26 @@
+.home-page {
+    .jumbotron {
+        h1 {
+            font-weight: 500;
+        }
+        .lead {
+            font-weight: 400;
+        }
+        .btn {
+            background-color: #343a40;
+            border-color: #343a40;
+            border-radius: 0px;
+            box-shadow: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: #343a40;
+                border-color: #343a40;
+                border-radius: 0px;
+                outline: none;
+                box-shadow: none !important;
+            }
+        }
+    }
+}

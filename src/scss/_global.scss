@@ -1,0 +1,97 @@
+pre {
+    border-radius: 10px;
+}
+.page-title {
+    font-size: 3.5rem;
+}
+.section-title {
+    font-size: 2.5rem;
+}
+.article-title {
+    font-size: 2.3rem;
+}
+.content-title {
+    font-size: 1.3rem;
+}
+.article-content {
+    font-size: 1.1rem;
+}
+.btn {
+    border-radius: 0;
+    background-color: #343a40;
+    border-color: #343a40;
+    color: #fff;
+    font-weight: 400; 
+    display: flex;
+    align-items: center;
+    width: fit-content;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: #343a40 !important;
+        border-color: #343a40 !important;
+        box-shadow: none !important;
+    }
+    
+.arrow {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    margin-top: 2px;
+
+    &-left {
+        transform: rotate(-135deg);
+        margin-right: 5px;
+    }
+    &-right {
+        transform: rotate(45deg);
+        margin-left: 5px;
+    }
+  }
+}
+
+footer {
+    a {
+        color: #0ea2c3;
+        opacity: 0.8;
+
+        &:focus,
+        &:hover,
+        &:active {
+            text-decoration: none;
+            opacity: 1;
+            color: #0ea2c3;
+        }
+    }
+}
+
+.progress {
+    .progress-bar {
+        background-color: #343a40;
+    }
+}
+
+.home {
+    &-list {
+        li {
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+    &-logo {
+        width: 200px;
+        height: auto;
+    }
+}
+
+.navbar-nav {
+    .nav-item {
+        @media screen and (max-width: 991px) {
+            text-align: center;
+        }
+    }
+}
