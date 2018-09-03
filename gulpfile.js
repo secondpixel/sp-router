@@ -159,7 +159,7 @@ gulp.task("watch", function(){
     );
     gulp.watch(
         [
-            path.src.scss + '**/*.scss',
+            path.src + '**/*.scss',
         ], 
         ['sass']
     ).on('change', browserSync.reload);
