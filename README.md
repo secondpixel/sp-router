@@ -14,5 +14,5 @@ npm i sp-router-js
 </h3>
 
 <h1>
-    To read all documentation about SPRouter click <a href="http://sprouter.secondpixel.net/">here</a>.
+    To read all documentation about SPRouter click <a href="http://sprouter.secondpixel.net/" target="_blank">here</a>.
 </h1>
