@@ -6,7 +6,8 @@
     <div class="additional-page-loader">
         <h4 class="mb-2 mt-3 content-title">Loader</h4>
         <p class="mb-2 mt-3 article-content">If you want to add loader in your application then you can add your loader html to your index.html and configure router to show and hide when page is fully loaded.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs html">
 &lt;!doctype html>
 &lt;html lang="en">
 
@@ -21,12 +22,10 @@
     &lt;/nav>
 
     &lt;div class="container">
-        <b class="text-warning">
         &lt;div class="progress d-none">
             &lt;div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
                 aria-valuemax="100" style="width: 100%">&lt;/div>
         &lt;/div>
-        </b>
         &lt;div id="app">&lt;/div>
     &lt;/div>
 
@@ -39,9 +38,11 @@
 &lt;/body>
 
 &lt;/html>
+</code>
 </pre>
         <p class="article-content">Then configure in routerConfig.js</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app",
     defaultRoute: "/"
@@ -60,45 +61,53 @@ var router = new SPRouter({
         }
     ],
     loader: {
-         <b class="text-warning">selector: ".progress", // your loader class or id selector</b>
+         selector: ".progress", // your loader class or id selector
     },
 });
+</code>
 </pre>
         <p class="mb-2 mt-3 article-content">This configuration will give show/hide behavior with <b>display:none/block;</b> inline style.</p>
         <p class="article-content">If you want to show/hide with custom class then add <b>showHideClass</b> key to loader configuration.</p>
-<pre class="bg-dark p-4 text-white mb-3">
+<pre>
+<code class="hljs javascript">
     loader: {
         selector: ".progress",
-        showHideClass: "d-none" <b class="text-warning">// your class to show and hide</b>
+        showHideClass: "d-none" // your class to show and hide
     },
+</code>
 </pre>
         <p class="article-content">By default your loader must be <b>hidden (to have your class for hidding)</b> and when router will start loading then will remove your class and when will finish with loading will add your class to hide page loader.</p>
         <p class="article-content">By default when loader is showed up div#app content is hiding. To prevent this behavior provide <b>loadContentHide</b> into loader configuration.</p>
-<pre class="bg-dark p-4 text-white mb-3">
+<pre>
+<code class="hljs javascript">
     loader: {
         selector: ".progress",
         showHideClass: "d-none",
-        <b class="text-warning">loadContentHide: false</b>
+        loadContentHide: false
     },
+</code>
 </pre>
         <hr/>
     </div>
     <div class="additional-page-lazy">
         <h4 class="mb-2 mt-3 content-title">Lazy loading</h4>
         <p class="mb-2 mt-3 article-content">If you want to add some delay when router is loading add lazy array objects in <b>routerConfig.js</b> configuration</p>
-<pre class="bg-dark p-4 text-white mb-3">
-    <b class="text-warning">lazy: {
+<pre>
+<code class="hljs javascript">
+    lazy: {
         loading: true
     },
-    </b>
+</code>
 </pre>
         <p class="article-content">By default lazy loading is set to true and has additional 500 milliseconds.</p>
         <p class="article-content">If you want to set custom delay interval, set duration object into lazy array.</p>
-<pre class="bg-dark p-4 text-white mb-3">
+<pre>
+<code class="hljs javascript">
     lazy: {
         loading: true,
-        <b class="text-warning">duration: 1000 // in milliseconds</b>
+        duration: 1000 // in milliseconds
     },
+</code>
 </pre>
     </div>
     <div class="buttons">

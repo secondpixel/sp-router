@@ -223,14 +223,12 @@ class SPRouter {
     }
 
     clickEvent(e, elem){
+        e.preventDefault();
+
         this.setRoute(
             elem.getAttribute("href"),
             elem
         );
- 
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
     }
 
     loader(type){

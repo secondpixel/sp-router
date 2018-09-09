@@ -7,7 +7,8 @@
     <div class="usage-page-selector">
         <h1 class="mt-5 mb-2 section-title">Content selector setup</h1>
         <p class="mb-2 mt-0 article-content">First add div to your index page and add selector by id or class:</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs html">
 &lt;!doctype html>
 &lt;html lang="en">
 
@@ -22,7 +23,7 @@
     &lt;/nav>
 
     &lt;div class="container">
-        <b class="text-warning">&lt;div id="app">&lt;/div></b>
+        &lt;div id="app">&lt;/div>
     &lt;/div>
 
     &lt;footer>
@@ -34,12 +35,15 @@
 &lt;/body>
 
 &lt;/html>
+</code>
 </pre>
         <p class="article-content">Then add content to router configuration.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app"
 });
+</code>
 </pre>
 
         <hr/>
@@ -47,11 +51,13 @@ var router = new SPRouter({
     <div class="usage-page-setup">
         <h1 class="mt-5 mb-3 section-title">Setup default route</h1>
         <p class="mb-2 mt-3 article-content">To setup default route for your application add <b class="text-danger">defaultRoute</b> parameter to the configuration.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app",
     defaultRoute: "/"
 });
+</code>
 </pre>
 
         <hr/>
@@ -61,21 +67,24 @@ var router = new SPRouter({
         <h4 class="mb-2 mt-3 content-title">Create basic routes</h4>
         <p class="article-content">To create a basic route you must add routes array with objects into router configuration.</p>
         <p class="article-content">All routes must have by default: <b class="text-danger">title</b>, <b class="text-danger">route</b> and <b class="text-danger">template</b>.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app",
     defaultRoute: "/"
     routes: [
         {
-            <b class="text-warning">title</b>: "Home",
-            <b class="text-warning">route</b>: "/",
-            <b class="text-warning">template</b>: "views/home/home.html"
+            title: "Home",
+            route: "/",
+            template: "views/home/home.html"
         }
     ],
 });
+</code>
 </pre>
         <p class="article-content">Additional if you want to add custom js file for every page then provide script key for every route.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app",
     defaultRoute: "/"
@@ -84,15 +93,17 @@ var router = new SPRouter({
             title: "Home",
             route: "/",
             template: "views/home/home.html",
-            <b class="text-warning">script</b>: "views/home/home.js"
+            script: "views/home/home.js"
         }
     ],
 });
+</code>
 </pre>
 
         <h4 class="mb-2 mt-3 content-title">Create routes with segments</h4>
         <p class="article-content">If we want to add page with products and preview page for every product we must provide some id, title etc.. and after to get this dynamic parameters in every page. Next following code will show you how to configure dynamic routes with parameters.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app",
     defaultRoute: "/"
@@ -105,19 +116,22 @@ var router = new SPRouter({
         },
         {
             title: "Product",
-            <b class="text-warning">route: "/products/:productId/view",</b>
+            route: "/products/:productId/view",
             template: "views/products/product.html",
             script: "views/products/product.js"
         }
     ],
 });
+</code>
 </pre>
         <p class="article-content">All dynamic parameters you want to configure in routes must be sperated with color(:).</p>
         <p class="article-content">Example: <b class="text-danger">:productId</b></p>
         <p class="article-content">To get this dynamic paramter (id, title etc...) you must take from router object.</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({...});
 var id = router.segment("productId");
+</code>
 </pre>
     </div>
     

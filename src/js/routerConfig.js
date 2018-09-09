@@ -38,6 +38,11 @@ var router = new SPRouter({
             title: "Hashtag Escape",
             route: "/hashtag",
             template: "views/hashtag/hashtag.html"
+        },
+        {
+            title: "Parameters",
+            route: "/parameters",
+            template: "views/parameters/parameters.html"
         }
     ],
     defaultRoute: "/",

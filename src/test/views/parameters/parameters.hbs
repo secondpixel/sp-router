@@ -1,0 +1,36 @@
+<div class="parameters-page">
+    <div class="parameters-page-header">
+        <h1 class="mb-3 page-title">Parameters</h1>
+
+        <hr/>
+    </div>
+<pre>
+<code class="hljs javascript">
+var router = new SPRouter({
+    content: "#app", // content identifier
+    defaultRoute: "/", // define default route
+    routes: [
+        {
+            title: "Home Page", // define page title
+            route: "/", // route path
+            template: "path/to/view/view.html", // define view path for current route
+            script: "path/to/script/script.js" // define script for current view
+        }
+    ], // define routes
+    loader: {
+            selector: ".your-loader-class", // loader selector
+            showHideClass: "d-none", // add class for show and hide
+            loadContentHide: false, // allow content to show/hide
+    }, // define loader
+    lazy: {
+        loading: true, // allow lazy loading
+        duration: 1000 // set duration in milliseconds
+    },
+    hashtag: false // enable/disable hashtag in routes
+});
+</code>
+</pre>
+    <div class="buttons">
+        <a href="#/hashtag" class="btn btn-outline-primary mb-5"><span class="arrow arrow-left"></span>Hashtag Escape</a>
+    </div>
+</div>

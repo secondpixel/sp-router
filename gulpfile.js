@@ -20,7 +20,8 @@ var path = {
     js: "js/",
     scss: "scss/",
     views: "views/",
-    images: "images/"
+    images: "images/",
+    styles: "styles/",
 };
 
 // files 
@@ -33,7 +34,12 @@ var files = {
     bootstrapJs: "bootstrap.bundle.js",
     bundelCss: "bundle.scss",
     bundleJs: "bundle.js",
-    routerFileConfig: "routerConfig.js"
+    routerFileConfig: "routerConfig.js",
+    highlightConfig: "highlight.js",
+    atomOneDark: "atom-one-dark.css",
+    agateCss: "agate.css",
+    customJs: "custom.js",
+    highlightPack: "highlight.pack.js",
 };
 
 // path with files configuration
@@ -50,7 +56,9 @@ var config = {
 // dependencies paths confiuration
 var dependenciesConfig = {
     bootstrap: path.nodeModules + "bootstrap/dist/",
-    jquery: path.nodeModules + "jquery/dist/"
+    jquery: path.nodeModules + "jquery/dist/",
+    highlightLib: path.nodeModules + "highlight.js/lib/",
+    highlightStyle: path.nodeModules + "highlight.js/styles/",
 };
 
 // compile handlebars
@@ -68,6 +76,7 @@ gulp.task('handlebars', function() {
         [config.views + 'usage/usage.hbs', path.test + path.views + 'usage/usage.html'],
         [config.views + 'hashtag/hashtag.hbs', path.test + path.views + 'hashtag/hashtag.html'],
         [config.views + 'additional/additional.hbs', path.test + path.views + 'additional/additional.html'],
+        [config.views + 'parameters/parameters.hbs', path.test + path.views + 'parameters/parameters.html'],
     ];
 
     return files.forEach(function(filePair) {
@@ -95,18 +104,28 @@ gulp.task("es6", function(){
         .pipe(gulp.dest(config.routerDist)); 
 });
 
+// move css
+gulp.task("css", function(){
+    return gulp.src([
+            path.src + path.styles + "*.css"
+        ])
+        .pipe(gulp.dest(config.cssDist + path.styles));
+});
+
 // move dependencies js files and make bundle
 gulp.task("js", function(){
     gulp.src([
         dependenciesConfig.jquery + files.jquery,
-        dependenciesConfig.bootstrap + path.js + files.bootstrapJs,
+        dependenciesConfig.bootstrap + path.js + files.bootstrapJs
     ])
     .pipe(concat(files.bundleJs))
     .pipe(gulp.dest(config.jsDist))
     .pipe(browserSync.stream());
 
     gulp.src([
+        path.src + path.js + files.highlightPack,
         path.src + path.js + files.routerFileConfig,
+        path.src + path.js + files.customJs
     ])
     .pipe(gulp.dest(config.jsDist))
     .pipe(browserSync.stream());
@@ -181,6 +200,7 @@ gulp.task(
         "sass", 
         "es6", 
         "js",
+        "css",
         "images",
         "watch"
     ]

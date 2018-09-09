@@ -252,11 +252,9 @@ var SPRouter = function () {
     }, {
         key: "clickEvent",
         value: function clickEvent(e, elem) {
-            this.setRoute(elem.getAttribute("href"), elem);
-
-            e.stopPropagation();
             e.preventDefault();
-            return false;
+
+            this.setRoute(elem.getAttribute("href"), elem);
         }
     }, {
         key: "loader",

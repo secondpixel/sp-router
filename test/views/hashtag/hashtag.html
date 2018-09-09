@@ -9,7 +9,8 @@
         <p class="mt-3 mb-3 article-content">To escape hashtag in routes then add following .htaccess file.</p>
         <hr/>
         <p class="mb-2 mt-3 article-content">First create .htaccess file in same level with your index file and add following code</p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs apache">
 RewriteEngine On
 # The following rule tells Apache that if the requested filename
 # exists, simply serve it.
@@ -26,12 +27,14 @@ RewriteRule ^.*$ - [NC,L]
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.html [NC,L]
+</code>
 </pre>
         <p class="article-content">Then add following configuration in <b>routerConfig.js</b></p>
-<pre class="bg-dark p-4 text-white">
+<pre>
+<code class="hljs javascript">
 var router = new SPRouter({
     content: "#app",
-    defaultRoute: "/"
+    defaultRoute: "/",
     routes: [
         {
             title: "Products",
@@ -53,12 +56,18 @@ var router = new SPRouter({
         loading: true,
         duration: 100
     },
-    <b class="text-warning">hashtag: false</b>
+    hashtag: false
 });
+</code>
 </pre>
     </div>
     <div class="buttons">
-        <a href="#/additional" class="btn btn-outline-primary mb-5"><span class="arrow arrow-left"></span>Additional</a>
+        <div class="row">
+            <div class="col d-flex justify-content-between">
+                <a href="/additional" class="btn btn-outline-primary mb-5"><span class="arrow arrow-left"></span>Additional</a>
+                <a href="#/parameters" class="btn btn-outline-primary mb-5">Parameters<span class="arrow arrow-right"></span></a>
+            </div>
+        </div>
     </div>
 </div>
 
